@@ -1,0 +1,12 @@
+.convertor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 520px;
+  min-height: 250px;
+  background: #0d0235b6;
+  text-align: center;
+  margin: 130px auto;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}

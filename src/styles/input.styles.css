@@ -1,0 +1,12 @@
+.input-currency {
+  margin: 10px;
+  outline: 1px;
+  padding: 14px 32px 14px 16px;
+  border-radius: 4px 4px 4px 4px;
+  justify-content: center;
+  border: 2px solid #0cffe3;
+  outline: none;
+  width: 320px;
+  background: white;
+  color: rgb(0, 0, 0);
+}
