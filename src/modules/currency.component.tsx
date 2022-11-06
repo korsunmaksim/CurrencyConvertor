@@ -2,23 +2,27 @@ import React from "react";
 import "../styles/input.styles.css";
 import "../styles/drop-list.styles.css";
 
-interface CurrencyProps {
-  value: number;
-  inputHandler: any;
-  selectHandler: any;
+interface ICurrencyOptions {
+  value: string;
+  title: string;
 }
 
-export const Currency = (props: CurrencyProps) => {
+interface ICurrencyProps {
+  value: number;
+  options: ICurrencyOptions[];
+  inputHandler: React.ChangeEventHandler<HTMLInputElement>;
+  selectHandler: React.ChangeEventHandler<HTMLSelectElement>;
+}
+
+export const Currency = (props: ICurrencyProps) => {
   return (
     <div>
       <select className="drop-list" onChange={props.selectHandler}>
-        <option value="USD">USD</option>
-        <option value="UAH">UAH</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-        <option value="CHF">GHF</option>
-        <option value="EUR">EUR</option>
-        <option value="CNY">CNY</option>
+        {props.options.map((el) => (
+          <option key={el.value} value={el.value}>
+            {el.title}
+          </option>
+        ))}
       </select>
       <input
         placeholder="Enter number"

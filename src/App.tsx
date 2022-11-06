@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
 import { Currency } from "./modules/currency.component";
-import axios from "axios";
 import "./styles/convertor.styles.css";
-import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 
 function App() {
   const [currencies, setCurrencies] = useState({
@@ -11,7 +8,6 @@ function App() {
     currency2: "USD",
   });
   const [currencyValue, setCurrencyValue] = useState({ value1: 1, value2: 1 });
-
   const [currencyData, setCurrencyData] = useState({
     UAH: 0,
     GBP: 0,
@@ -20,9 +16,17 @@ function App() {
     EUR: 0,
     CNY: 0,
   });
+  const currencyList = [
+    { value: "USD", title: "USD" },
+    { value: "UAH", title: "UAH" },
+    { value: "GBP", title: "GBP" },
+    { value: "JPY", title: "JPY" },
+    { value: "CHF", title: "CHF" },
+    { value: "EUR", title: "EUR" },
+    { value: "CNY", title: "CNY" },
+  ];
 
   const myHeaders = new Headers();
-
   myHeaders.append("apikey", "rz8A8dGhW3DCFKaj9XNgM34H90msQTn1");
 
   const options: RequestInit = {
@@ -67,24 +71,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(currencies);
-    setCurrencyValue({
-      ...currencyValue,
-      value1:
-        currencyValue.value2 *
-        (GetCurrentCurrency(currencies.currency1) /
-          GetCurrentCurrency(currencies.currency2)),
-    });
-  }, [currencies.currency2]);
-
-  useEffect(() => {
-    console.log(currencies);
     setCurrencyValue({
       ...currencyValue,
       value2:
         currencyValue.value1 *
         (GetCurrentCurrency(currencies.currency2) /
           GetCurrentCurrency(currencies.currency1)),
+    });
+  }, [currencies.currency2]);
+
+  useEffect(() => {
+    setCurrencyValue({
+      ...currencyValue,
+      value1:
+        currencyValue.value2 *
+        (GetCurrentCurrency(currencies.currency1) /
+          GetCurrentCurrency(currencies.currency2)),
     });
   }, [currencies.currency1]);
 
@@ -93,7 +95,8 @@ function App() {
       <h1>Convertor</h1>
       <Currency
         value={currencyValue.value1}
-        inputHandler={(e: any) => {
+        options={currencyList}
+        inputHandler={(e: React.ChangeEvent<HTMLInputElement>) => {
           setCurrencyValue({
             value1: Number(e.target.value),
             value2:
@@ -102,13 +105,14 @@ function App() {
                 GetCurrentCurrency(currencies.currency1)),
           });
         }}
-        selectHandler={(e: any) => {
+        selectHandler={(e: React.ChangeEvent<HTMLSelectElement>) => {
           setCurrencies({ ...currencies, currency1: e.target.value });
         }}
       />
       <Currency
         value={currencyValue.value2}
-        inputHandler={(e: any) => {
+        options={currencyList}
+        inputHandler={(e: React.ChangeEvent<HTMLInputElement>) => {
           setCurrencyValue({
             value1:
               Number(e.target.value) *
@@ -117,11 +121,10 @@ function App() {
             value2: Number(e.target.value),
           });
         }}
-        selectHandler={(e: any) => {
+        selectHandler={(e: React.ChangeEvent<HTMLSelectElement>) => {
           setCurrencies({ ...currencies, currency2: e.target.value });
         }}
       />
-      <button onClick={() => console.log(currencyData)}>Click</button>
     </div>
   );
 }
