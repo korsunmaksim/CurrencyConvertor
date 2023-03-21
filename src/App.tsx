@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Currency } from "./modules/currency.component";
 import "./styles/convertor.styles.css";
 
